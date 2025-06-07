@@ -1,8 +1,4 @@
 import config
-#import sys
-
-#sys.path.append(config.DIR_PATH + 'modules/')
-
 from modules import base64_python
 from modules import morse_python
 from modules import hexedimical_python

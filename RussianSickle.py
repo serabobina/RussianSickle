@@ -142,6 +142,11 @@ def printDatabase():
     strings = list(reports.keys())
     print(Colors.default_pref + 'Reports: ')
 
+    if len(reports) == 0:
+        print(Colors.error_pref + "You have no saved reports.")
+        exitToMenu()
+        return
+
     count = 1
     for string_name in reports.keys():
         print(Colors.greed_color + f'{count}) {string_name}' + Colors.default_color + ' ' * 6 + f'{reports[string_name]["time"]}')
