@@ -32,10 +32,12 @@ functions = {'Base64': base64_python, 'Morse': morse_python,
              'SHA3-224': SHA3_224_python, 'SHA3-256': SHA3_256_python,
              'SHA3-384': SHA3_384_python, 'SHA3-512': SHA3_512_python}
 
+
 def Crack(string, cipher):
     decoded_string = functions[cipher].crack(string)
     
     return decoded_string
+
 
 def Encode(string, cipher):
     encoded_string = functions[cipher].encode(string)
