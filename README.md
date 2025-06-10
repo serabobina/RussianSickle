@@ -11,13 +11,13 @@ Crack decoded strings across 20+ algorithms. There  are: ROT13, Rail Fence, Base
 
 ## Installation
 ```
-$ pip install -r requirements.txt
+pip3 install -r requirements.txt
 ```
 
 ## Usage
 Run RussianSickle.py with python:
 ```
-$ python3 RussianSickle.py
+python3.8 RussianSickle.py
 ```
 
 ## Examples
