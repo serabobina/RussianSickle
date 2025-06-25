@@ -7,12 +7,16 @@ import Cracker
 import Database
 import Colors
 import Signal
+import argparse
 
 
 init(autoreset=True)
 
 
-def printResult(answer):
+def printResult(string, answer):
+
+    print('\n' + Colors.default_pref + "String: " +
+          Colors.greed_color + string, end='')
 
     for cipher, result in answer.items():
         state, pref, color = getStateAndPref(result, cipher)
@@ -102,7 +106,7 @@ def getElement(fraze, elements, fraze_to_exit='exit'):
 
 def exitToMenu():
     print('\n' + Colors.default_pref +
-          'Press enter to come back to menu... ', end='')
+          'Press enter to exit... ', end='')
     input()
 
 
@@ -113,7 +117,7 @@ def CrackString():
                    'Enter string you want to crack: ' + Colors.user_input_color)
     answer = Cracker.cracker(string, 0)
 
-    printResult(answer)
+    printResult(string, answer)
 
     if askForSaveReport():
         saveReport(string, answer)
@@ -124,6 +128,11 @@ def CrackString():
 
 def saveReport(string, result):
     Database.save({string: result})
+
+
+def saveReportInFile(report, path):
+    with open(path, 'w') as file:
+        json.dump(report, file)
 
 
 def askForSaveReport():
@@ -173,10 +182,9 @@ def printReport(report):
     string = report['value']
     time = report['time']
 
-    print('\n' + Colors.default_pref + time +
-          ' >>> ' + Colors.greed_color + string)
+    print('\n' + Colors.default_pref + '>>> ' + time)
 
-    printResult(report['result'])
+    printResult(string, report['result'])
 
 
 def askForDeleteReport():
@@ -218,7 +226,7 @@ def BruteForceString():
                    'Enter string you want to brute force: ' + Colors.user_input_color)
     answer = Cracker.cracker(string, 1)
 
-    printResult(answer)
+    printResult(string, answer)
 
     if askForSaveReport():
         saveReport(string, answer)
@@ -227,7 +235,7 @@ def BruteForceString():
     exitToMenu()
 
 
-def main():
+def default_mode():
     modes = {"Crack string": CrackString,
              "Brute force string": BruteForceString,
              "Database": printDatabase, "About": About, "Exit": exiting}
@@ -243,6 +251,86 @@ def main():
 
         func = modes[mode]
         func()
+
+
+def get_strings_for_file(path):
+    if not os.path.isfile(path):
+        return 0
+
+    with open(path) as file:
+        return list(map(str.strip, file.readlines()))
+
+
+def RussianSickle():
+    parser = argparse.ArgumentParser(
+        description='Cracking strings with RussianSickle.')
+
+    parser.add_argument('-b', '--bruteforce', action='store_true',
+                        help='A mode that allows you to crack a string using brute force using simple ciphers.')
+
+    parser.add_argument(
+        '-o', '--output', help='Path to output file (format: json).')
+
+    parser.add_argument(
+        '-i', '--input', help='Path to input file (format: each string on a new line).')
+
+    parser.add_argument('-s', '--string', nargs='+',
+                        help='String or strings for cracking.')
+
+    parser.add_argument('-d', '--database', action='store_true',
+                        help='Save report in database.')
+
+    args = parser.parse_args()
+
+    is_bruteforce_mode = args.bruteforce
+    output_file = args.output
+    input_file = args.input
+    strings = args.string
+    database_save = args.database
+
+    if any((is_bruteforce_mode, output_file, input_file, strings)):
+        greeding()
+    else:
+        default_mode()
+
+    if input_file and strings:
+        print(Colors.error_pref +
+              "You must use --string and --input separately, not at the same time")
+
+    reports = {}
+
+    if strings:
+        for string in strings:
+            answer = Cracker.cracker(
+                string, mode=is_bruteforce_mode, beautiful_print=0)
+            reports[string] = answer
+
+    if input_file:
+        strings = get_strings_for_file(input_file)
+        if not strings:
+            print(Colors.error_pref + "File doesn't exist.")
+
+        for string in strings:
+            answer = Cracker.cracker(
+                string, mode=is_bruteforce_mode, beautiful_print=0)
+            reports[string] = answer
+
+    if len(reports) > 0:
+        if output_file:
+            saveReportInFile(reports, output_file)
+
+        if database_save:
+            Database.save(reports)
+
+        for string in reports:
+            printResult(string, reports[string])
+
+    else:
+        BruteForceString()
+
+
+def main():
+    RussianSickle()
 
 
 if __name__ == '__main__':
