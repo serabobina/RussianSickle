@@ -199,7 +199,7 @@ def deleteReport(report_name):
 def About():
     print(Colors.greed_color + '\n' + text2art("ABOUT", font='small'), end='')
 
-    thanks = ['Man1', 'Man2', 'Man3']
+    thanks = ['prazd']
     author = 'serabobina'
     text = f'The Russian Sickle project allows you to crack encrypted strings, determine a possible hashing algorithm, and give recommendations on brute forcing hashed passwords. Russian Sickle knows 6 types of encryption, such as Base64, Caesar, Rail Fence ciphers, as well as Hexedimical, Binary, ASCII encodings, and others. Author: {Colors.author_color + author}{Colors.greed_color}. \nThanks: '
 
