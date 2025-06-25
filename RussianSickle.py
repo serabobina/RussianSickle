@@ -278,7 +278,7 @@ def RussianSickle():
                         help='string or strings for cracking.')
 
     parser.add_argument('-d', '--database', action='store_true',
-                        help='save report in database.')
+                        help='save report to database.')
 
     args = parser.parse_args()
 
