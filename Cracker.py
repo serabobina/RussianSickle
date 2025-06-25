@@ -5,7 +5,8 @@ import Dictionary
 import Colors
 
 
-def cracker(string, mode, beautiful_print=1): # 0 - Default and hash cracking 1 - Bruteforce cracking
+# 0 - Default and hash cracking 1 - Bruteforce cracking
+def cracker(string, mode, beautiful_print=1):
     encryption = Encryption(string)
 
     if mode == 0:
@@ -22,7 +23,7 @@ def cracker(string, mode, beautiful_print=1): # 0 - Default and hash cracking 1 
     if beautiful_print:
         print(Colors.default_color + '\n> Possible Ciphers:\n', Colors.decode_color +
               str(possible_algorithms))
-    
+
     cracking = Cracking(possible_algorithms, string)
 
     if beautiful_print:
@@ -39,23 +40,21 @@ class Encryption():
         self.string = string
         self.string_length = len(self.string)
 
-
     def getPossible(self, groups=[]):
         possible_ciphers = []
 
         for cipher_name, cipher in self.dictionary.items():
             if cipher['group'] not in groups and len(groups) != 0:
                 continue
-            
+
             if self.checkCipher(cipher_name):
                 possible_ciphers.append(cipher_name)
 
         return possible_ciphers
 
-
     def checkCipher(self, cipher_name: str):
         cipher = self.dictionary[cipher_name]
-        
+
         cipher_length = cipher['length']
         regular_string = cipher['regular_string']
 
@@ -65,19 +64,17 @@ class Encryption():
 
         return is_true_lenght and is_string_true
 
-
     def check_length(self, cipher_length):
         if cipher_length == -1:
             return 1
 
         return cipher_length == self.string_length
 
-
     def check_regular(self, regular_string, string):
         result = re.match(regular_string, string)
 
-        return (not result is None) and result.group(0) == string 
-    
+        return (not result is None) and result.group(0) == string
+
 
 class Cracking():
 
@@ -85,7 +82,6 @@ class Cracking():
         self.dictionary = Dictionary.get()
         self.ciphers = ciphers
         self.string = string
-
 
     def crack(self):
         answer = dict()
@@ -96,7 +92,8 @@ class Cracking():
         return answer
 
     def tryToCrack(self, cipher):
-        answer = {"error": 0, "result": 0, "group": self.dictionary[cipher]["group"]}
+        answer = {"error": 0, "result": 0,
+                  "group": self.dictionary[cipher]["group"]}
 
         try:
             result = Code.Crack(self.string, cipher)
@@ -105,5 +102,5 @@ class Cracking():
             answer["error"] = 1
 
         answer["result"] = result
-        
+
         return answer

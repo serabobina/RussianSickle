@@ -1,5 +1,6 @@
 from modules import hasher
 
+
 def crack(HASH):
     type_of_hash = 'SHA2-512'
     num_of_hash = 1700

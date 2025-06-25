@@ -35,12 +35,11 @@ functions = {'Base64': base64_python, 'Morse': morse_python,
 
 def Crack(string, cipher):
     decoded_string = functions[cipher].crack(string)
-    
+
     return decoded_string
 
 
 def Encode(string, cipher):
     encoded_string = functions[cipher].encode(string)
-    
+
     return encoded_string
-    

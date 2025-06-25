@@ -1,18 +1,19 @@
 import random
 from modules import brute_force
 
+
 def Encode(string, key, return_array=0):
     encoded_string = []
-    
+
     offset = 0
     i = 0
     for _ in range(len(string)):
         if i >= len(string):
             offset += 1
             i = offset
-            
+
         encoded_string.append(string[i])
-        
+
         i += key
 
     if not return_array:
@@ -23,8 +24,9 @@ def Encode(string, key, return_array=0):
 
 def encode(string):
     key = random.randint(2, len(string) - 1)
-    
+
     return Encode(string, key)
+
 
 def Decode(string, key):
     decode_table = []
@@ -32,10 +34,9 @@ def Decode(string, key):
         decode_table.append(str(i))
 
     encoded_table = Encode(decode_table, key, return_array=1)
-    
+
     decoded_list = [''] * len(string)
 
-    
     for i in range(len(encoded_table)):
         decoded_list[decode_table.index(encoded_table[i])] = string[i]
 

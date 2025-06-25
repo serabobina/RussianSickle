@@ -13,7 +13,3 @@ def crack(text):
     for word in text.split():
         words += chr(int(word, 2))
     return words
-
-
-
-

@@ -1,26 +1,30 @@
 import random
 from modules import brute_force
 
-eng_alth = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z']
-ru_alth = ['а', 'б', 'в', 'г', 'д', 'е', 'ё', 'ж', 'з', 'и', 'й', 'к', 'л', 'м', 'н', 'о', 'п', 'р', 'с', 'т', 'у', 'ф', 'х', 'ц', 'ч', 'ш', 'щ', 'ъ', 'ы', 'ь', 'э', 'ю', 'я']
+eng_alth = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l',
+            'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z']
+ru_alth = ['а', 'б', 'в', 'г', 'д', 'е', 'ё', 'ж', 'з', 'и', 'й', 'к', 'л', 'м', 'н', 'о',
+           'п', 'р', 'с', 'т', 'у', 'ф', 'х', 'ц', 'ч', 'ш', 'щ', 'ъ', 'ы', 'ь', 'э', 'ю', 'я']
 
 eng_alth_up = list(map(str.upper, eng_alth))
 ru_alth_up = list(map(str.upper, ru_alth))
 
+
 def Caesar(string, offset):
     encoded_string = ''
-    
+
     for symb in string:
         if symb.isalpha():
             alth = getAlth(symb)
             start = alth[0]
             length = len(alth)
-            
-            symb = alth[(alth.index(symb) +  offset) % length]     
+
+            symb = alth[(alth.index(symb) + offset) % length]
 
         encoded_string += symb
 
     return encoded_string
+
 
 def Decode(string, key):
     return Caesar(string, -key)
@@ -46,7 +50,7 @@ def getRange(string):
             end = len(getAlth(symb))
             if end > max_end:
                 max_end = end
-    
+
     return (start, max_end)
 
 
@@ -59,4 +63,3 @@ def encode(string):
 def crack(string):
     brute_range = getRange(string)
     return brute_force.bruteForce(string, brute_range, Decode)
-    

@@ -11,27 +11,23 @@ import Signal
 
 init(autoreset=True)
 
+
 def printResult(answer):
-    
+
     for cipher, result in answer.items():
         state, pref, color = getStateAndPref(result, cipher)
-        
 
-            
         print('\n' + pref + cipher + state + color + result["result"])
 
-        
     if len(answer) == 0:
         print('\n' + Colors.string_not_found_pref + "String not found :(\n")
-
-
 
 
 def getStateAndPref(result, cipher):
     state = ' ' + "Cracked: "
     pref = Colors.decode_pref
     color = Colors.greed_color
-    
+
     if result["group"] == 'bruteforce':
         state = ':\n'
         color = ''
@@ -40,18 +36,17 @@ def getStateAndPref(result, cipher):
         state = ': '
         color = ''
 
-
     if result["error"]:
         state = ' ' + "Error: "
         pref = Colors.error_pref
         color = Colors.error_color
 
     return (state, pref, color)
-    
-            
+
 
 def ask(question, true_value='yes', false_value='no'):
-    fraze = '\n' + Colors.question_pref + f"{question} [{true_value}]/[{false_value}]: "
+    fraze = '\n' + Colors.question_pref + \
+        f"{question} [{true_value}]/[{false_value}]: "
 
     while True:
         ans = input(fraze + Colors.user_input_color).lower()
@@ -67,18 +62,18 @@ def greeding():
     clearConsole()
 
     greed_fraze = text2art('RUSSIAN SICKLE', 'tarty1')
-    
+
     print(Colors.greed_color + greed_fraze + '\n')
 
 
 def clearConsole():
     print(ansi.clear_screen(), end='')
     print(ansi.Cursor.POS(), end='')
-    
+
 
 def printModes(modes):
     print(Colors.default_pref + "Modes: ")
-    
+
     for i in range(len(modes)):
         print(Colors.options_color + f'{i+1}) {modes[i]}', end='  ')
     print()
@@ -93,28 +88,29 @@ def getElement(fraze, elements, fraze_to_exit='exit'):
 
         if number_element.strip().lower() == fraze_to_exit:
             return 0
-        
+
         if not number_element.isdigit():
             fraze = Colors.error_pref + 'Error! Input must be number. Try again: '
             continue
-        
+
         if not (1 <= int(number_element) and int(number_element) <= len(elements)):
             fraze = Colors.error_pref + 'Error! Number not in the right range. Try again: '
             continue
 
         return elements[int(number_element) - 1]
-            
+
 
 def exitToMenu():
-    print('\n' + Colors.default_pref + 'Press enter to come back to menu... ', end='')
+    print('\n' + Colors.default_pref +
+          'Press enter to come back to menu... ', end='')
     input()
-
 
 
 def CrackString():
     print(Colors.greed_color + '\n' + text2art("CRACKING", font='small'), end='')
-    
-    string = input(Colors.default_pref + 'Enter string you want to crack: ' + Colors.user_input_color)
+
+    string = input(Colors.default_pref +
+                   'Enter string you want to crack: ' + Colors.user_input_color)
     answer = Cracker.cracker(string, 0)
 
     printResult(answer)
@@ -149,16 +145,17 @@ def printDatabase():
 
     count = 1
     for string_name in reports.keys():
-        print(Colors.greed_color + f'{count}) {string_name}' + Colors.default_color + ' ' * 6 + f'{reports[string_name]["time"]}')
+        print(Colors.greed_color + f'{count}) {string_name}' +
+              Colors.default_color + ' ' * 6 + f'{reports[string_name]["time"]}')
         count += 1
     print()
-    
+
     fraze = "Enter number of element you want to see ('exit' to exit):"
     report_name = getElement(fraze, strings)
-    
+
     if not report_name:
         return
-        
+
     report = reports[report_name]
 
     clearConsole()
@@ -175,8 +172,9 @@ def printDatabase():
 def printReport(report):
     string = report['value']
     time = report['time']
-    
-    print('\n' + Colors.default_pref + time + ' >>> ' + Colors.greed_color + string)
+
+    print('\n' + Colors.default_pref + time +
+          ' >>> ' + Colors.greed_color + string)
 
     printResult(report['result'])
 
@@ -188,7 +186,6 @@ def askForDeleteReport():
 
 def deleteReport(report_name):
     Database.delete(report_name)
-    
 
 
 def About():
@@ -197,15 +194,14 @@ def About():
     thanks = ['Man1', 'Man2', 'Man3']
     author = 'serabobina'
     text = f'The Russian Sickle project allows you to crack encrypted strings, determine a possible hashing algorithm, and give recommendations on brute forcing hashed passwords. Russian Sickle knows 6 types of encryption, such as Base64, Caesar, Rail Fence ciphers, as well as Hexedimical, Binary, ASCII encodings, and others. Author: {Colors.author_color + author}{Colors.greed_color}. \nThanks: '
-    
 
     for guy in thanks:
         text += Colors.author_color + '\n ' + guy
 
     text += Colors.greed_color + '\n\nLove you :)'
-        
+
     print(Colors.greed_color + text)
-    
+
     exitToMenu()
 
 
@@ -215,9 +211,11 @@ def exiting():
 
 
 def BruteForceString():
-    print(Colors.greed_color + '\n' + text2art("BRUTE FORCING", font='small'), end='')
-    
-    string = input(Colors.default_pref + 'Enter string you want to brute force: ' + Colors.user_input_color)
+    print(Colors.greed_color + '\n' +
+          text2art("BRUTE FORCING", font='small'), end='')
+
+    string = input(Colors.default_pref +
+                   'Enter string you want to brute force: ' + Colors.user_input_color)
     answer = Cracker.cracker(string, 1)
 
     printResult(answer)
@@ -229,7 +227,6 @@ def BruteForceString():
     exitToMenu()
 
 
-
 def main():
     modes = {"Crack string": CrackString,
              "Brute force string": BruteForceString,
@@ -238,16 +235,14 @@ def main():
 
     while True:
         greeding()
-        
+
         printModes(modes_keys)
         print()
-        mode = getElement('Please enter number of mode you need to use:', modes_keys)
+        mode = getElement(
+            'Please enter number of mode you need to use:', modes_keys)
 
         func = modes[mode]
-        func()        
-    
-    
-
+        func()
 
 
 if __name__ == '__main__':

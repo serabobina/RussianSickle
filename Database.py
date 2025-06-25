@@ -7,11 +7,13 @@ base_dir_path = config.DIR_PATH + 'database'
 base_file_path = 'database.json'
 base_path = f'{base_dir_path}/{base_file_path}'
 
+
 def get():
     createIfNotExist()
     with open(base_path) as file:
         return json.load(file)
-        
+
+
 def save(new_reports: dict):
     createIfNotExist()
     with open(base_path) as file:
@@ -19,14 +21,17 @@ def save(new_reports: dict):
 
     for string in new_reports.keys():
         string_name = getUniqueString(string, reports.keys())
-        reports[string_name] = {'value': string, 'time': getTime(), 'result': new_reports[string]}
+        reports[string_name] = {'value': string,
+                                'time': getTime(), 'result': new_reports[string]}
 
     with open(base_path, 'w') as file:
         json.dump(reports, file)
 
+
 def clear():
     with open(base_path, 'w') as file:
         file.write('{}')
+
 
 def delete(report_name):
     with open(base_path) as file:
@@ -37,7 +42,7 @@ def delete(report_name):
 
     with open(base_path, 'w') as file:
         json.dump(reports, file)
-        
+
 
 def getUniqueString(string, reports):
     pref = 2
@@ -54,7 +59,7 @@ def createIfNotExist():
 
     if not os.path.isfile(base_path):
         clear()
-    
+
 
 def getTime():
     report_time = datetime.now()
@@ -69,7 +74,6 @@ def getTime():
 
     return f'{year}.{month}.{day} {hour}:{minute}:{second}'
 
+
 def completeNulls(num, length):
-    return '0' * (len(str(num)) < length) + str(num) 
-
-
+    return '0' * (len(str(num)) < length) + str(num)

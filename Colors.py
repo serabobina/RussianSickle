@@ -15,4 +15,3 @@ error_pref = error_color + '[!] '
 question_pref = question_color + '[?] '
 about_pref = greed_color + ''
 string_not_found_pref = error_color + '[-] '
-

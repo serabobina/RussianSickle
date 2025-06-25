@@ -13,4 +13,3 @@ def crack(text):
         byte = int(text[i: i + 8], 2)
         words += chr(byte)
     return words
-

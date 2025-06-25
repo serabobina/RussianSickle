@@ -1,5 +1,6 @@
 from modules import hasher
 
+
 def crack(HASH):
     type_of_hash = 'MD5'
     num_of_hash = 0

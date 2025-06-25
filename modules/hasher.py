@@ -6,6 +6,6 @@ Linux:
 1) {Colors.greed_color}%HASH > your_hash.hash
 {Colors.default_color}2) {Colors.greed_color}hashcat -a 0 -m %NUM_OF_HASH your_hash.hash PATH_TO_YOUR_WORDLIST.dict"""
 
+
 def getFraze(type_of_hash, HASH, num_of_hash):
     return fraze.replace('%HASH', HASH).replace('%TYPE_OF_HASH', str(type_of_hash)).replace('%NUM_OF_HASH', str(num_of_hash))
-

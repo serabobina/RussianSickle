@@ -17,5 +17,3 @@ def encode(text):
         hex_text += ' '
     hex_text = hex_text[:-1]
     return hex_text
-
-

@@ -3,8 +3,9 @@ def encode(string):
 
     for symb in string:
         encoded_string += str(ord(symb)) + ' '
-        
+
     return encoded_string[:-1]
+
 
 def crack(encoded_string):
     string = ''
@@ -13,4 +14,3 @@ def crack(encoded_string):
         string += chr(int(byte))
 
     return string
-    
