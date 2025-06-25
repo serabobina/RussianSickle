@@ -16,7 +16,7 @@ init(autoreset=True)
 def printResult(string, answer):
 
     print('\n' + Colors.default_pref + "String: " +
-          Colors.greed_color + string, end='')
+          Colors.greed_color + string)
 
     for cipher, result in answer.items():
         state, pref, color = getStateAndPref(result, cipher)
