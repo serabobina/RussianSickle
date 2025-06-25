@@ -297,6 +297,10 @@ def RussianSickle():
         print(Colors.error_pref +
               "You must use --string and --input separately, not at the same time")
 
+    if output_file and not (strings or input_file):
+        print(Colors.error_pref +
+              "You must use --string or --input with -o option")
+
     reports = {}
 
     if strings:
@@ -325,7 +329,7 @@ def RussianSickle():
         for string in reports:
             printResult(string, reports[string])
 
-    else:
+    elif is_bruteforce_mode:
         BruteForceString()
 
 
