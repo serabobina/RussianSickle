@@ -295,12 +295,17 @@ def RussianSickle():
 
     if input_file and strings:
         print(Colors.error_pref +
-              "You must use --string and --input separately, not at the same time")
+              "You must use --string and --input separately, not at the same time.")
         exit()
 
     if output_file and not (strings or input_file):
         print(Colors.error_pref +
-              "You must use --string or --input with -o option")
+              "You must use -o option with --string or --input.")
+        exit()
+
+    if database_save and not (strings or input_file):
+        print(Colors.error_pref +
+              "You must use --database option with --string or --input.")
         exit()
 
     reports = {}
