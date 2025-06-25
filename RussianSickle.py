@@ -288,7 +288,7 @@ def RussianSickle():
     strings = args.string
     database_save = args.database
 
-    if any((is_bruteforce_mode, output_file, input_file, strings)):
+    if any((is_bruteforce_mode, output_file, input_file, strings, database_save)):
         greeding()
     else:
         default_mode()
