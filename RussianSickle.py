@@ -266,19 +266,19 @@ def RussianSickle():
         description='Cracking strings with RussianSickle.')
 
     parser.add_argument('-b', '--bruteforce', action='store_true',
-                        help='A mode that allows you to crack a string using brute force using simple ciphers.')
+                        help='cracking using bruteforce for simple ciphers.')
 
     parser.add_argument(
-        '-o', '--output', help='Path to output file (format: json).')
+        '-o', '--output', help='path to output file (format: json).')
 
     parser.add_argument(
-        '-i', '--input', help='Path to input file (format: each string on a new line).')
+        '-i', '--input', help='path to input file (format: each string on a new line).')
 
     parser.add_argument('-s', '--string', nargs='+',
-                        help='String or strings for cracking.')
+                        help='string or strings for cracking.')
 
     parser.add_argument('-d', '--database', action='store_true',
-                        help='Save report in database.')
+                        help='save report in database.')
 
     args = parser.parse_args()
 
